@@ -1,0 +1,36 @@
+<h1>Spendings</h1>
+
+<%= form_tag spendings_path, method: :get do %>
+  <%= label_tag :search, 'Search by Employee or Department' %>
+  <%= text_field_tag :search, params[:search] %>
+  <%= submit_tag 'Search', name: nil %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Employee</th>
+      <th>Department</th>
+      <th>Date</th>
+      <th>Value</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @spendings.each do |spending| %>
+      <tr>
+        <td><%= spending.employee.name %></td>
+        <td><%= spending.department.name %></td>
+        <td><%= spending.date %></td>
+        <td><%= spending.value %></td>
+        <td>
+          <%= link_to 'Show', spending_path(spending) %>
+          <%= link_to 'Edit', edit_spending_path(spending) if current_user.admin? %>
+          <%= link_to 'Delete', spending_path(spending), method: :delete, data: { confirm: 'Are you sure?' } if current_user.admin? %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'New Spending', new_spending_path if current_user.admin? %>

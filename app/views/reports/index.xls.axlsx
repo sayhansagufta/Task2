@@ -1,0 +1,8 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "Spending Report") do |sheet|
+  sheet.add_row ['Date', 'Employee', 'Department', 'Value']
+
+  @spendings.each do |spending|
+    sheet.add_row [spending.date, spending.employee.name, spending.department.name, spending.value]
+  end
+end

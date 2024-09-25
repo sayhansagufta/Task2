@@ -1,0 +1,35 @@
+<h1>Employees</h1>
+
+<%= form_tag employees_path, method: :get do %>
+  <%= label_tag :search, 'Search by Employee or Department' %>
+  <%= text_field_tag :search, params[:search] %>
+  <%= submit_tag 'Search', name: nil %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Department</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @employees.each do |employee| %>
+      <tr>
+        <td><%= employee.name %></td>
+        <td><%= employee.department.name %></td>
+        <td>
+          <%= link_to 'Show', employee_path(employee) %>
+          <%= link_to 'Edit', edit_employee_path(employee) if current_user.admin? %>
+          <%= link_to 'Delete', employee_path(employee), method: :delete, data: { confirm: 'Are you sure?' } if current_user.admin? %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+
+<%= link_to 'New Employee', new_employee_path if current_user.admin? %>
+

@@ -1,0 +1,27 @@
+<h1>Reports</h1>
+
+<%= form_tag reports_path, method: :get do %>
+  <%= label_tag :value_filter, 'Filter by Value' %>
+  <%= number_field_tag :value_filter, params[:value_filter] %>
+  <%= submit_tag 'Filter', name: nil %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @spendings.each do |spending| %>
+      <tr>
+        <td><%= spending.date %></td>
+        <td><%= spending.value %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Download as Excel', reports_path(format: :xls) %>
+<%= link_to 'Download as PDF', reports_path(format: :pdf) %>
